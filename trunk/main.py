@@ -17,12 +17,12 @@ def get_wiki(query):
 
 
 def create_wordcloud(text):
-    mask = np.array(Image.open(path.join(currdir, "cloud.jpg")))
+    mask = np.array(Image.open(path.join(currdir, r"resources/cloud.jpg")))
 
     stopwords = set(STOPWORDS)
 
     wc = WordCloud(background_color="white",
-                   max_words=50000,
+                   max_words=500,
                    mask=mask,
                    stopwords=stopwords,
                    prefer_horizontal= 1,
@@ -32,25 +32,25 @@ def create_wordcloud(text):
                    )
 
     wc.generate(text)
-    wc.to_file(path.join(currdir, "output2.png"))
+    wc.to_file(path.join(currdir, r"output/output.png"))
 
 
 if __name__ == "__main__":
-    #query = "Россия"
+    query = "Россия"
     #query = sys.argv[1]
-    #text = get_wiki(query)
+    text = get_wiki(query)
     start_time = datetime.now()
     #text = "социология социлогию социология социологии"
-    #create_wordcloud(text)
+    create_wordcloud(text)
 
     # Provide data with mail and external password from id.mail.ru/security
-    username = "mailru.parser.test@mail.ru"
-    ext_password = "XM6N2JycVG63j59rRv0E"
+    # username = "mailru.parser.test@mail.ru"
+    # ext_password = "XM6N2JycVG63j59rRv0E"
 
-    gmailHandler = e.EmailHandler(username, ext_password)
-    gmailHandler.authenticate()
-    gmailHandler.get_messages()
-    gmailHandler.close()
+    # gmailHandler = e.EmailHandler(username, ext_password)
+    # gmailHandler.authenticate()
+    # gmailHandler.get_messages()
+    # gmailHandler.close()
 
-    print(datetime.now() - start_time)
+    # print(datetime.now() - start_time)
 
