@@ -48,7 +48,7 @@ class EmailHandler:
                         From = From.decode(encoding)
 
                     print("Subject:", subject)
-                    print("From:", From)
+                    print("From:", From.decode("UTF-8"))
 
                     # extract content-type of email
                     content_type = msg.get_content_type()
