@@ -34,6 +34,7 @@ def read_from_txt(filepath: str) -> str:
 
     result = _remove_punctuation_marks(result)
     result = result.lower()
+# Ошибку чтения файла лучше проверять на методе read # kish
     assert result != "", 'Ошибка чтения файла: ' + filepath
 
     return result
@@ -54,6 +55,7 @@ def get_dict_words_count(text: str) -> multidict:
     full_terms_dict = multidict.MultiDict()
     tmp_dict = {}
 
+# А нужна ли нам эта кака? Мб хватит только additionalAddWordsPath? # kish
     stopwords_list = _get_stopwords_list(conjunctionPath, prepositionPath, particlePath,
                                          interjectionPath, pronouncePath, additionalStopWordsPath)
 
@@ -63,6 +65,7 @@ def get_dict_words_count(text: str) -> multidict:
         if word not in addwords_list:   # un-skipped words
             if word in stopwords_list:  # skipped words
                 continue
+# Точно ли здесь нужен match? Вроде findall есть, чтобы точно отсечть инглиш. Иначе может пройти слово кот-obormot # kish
             elif re.match(r"([A-Z])\w*|([a-z])\w*|\d+", word):   # skip english and numbers
                 continue
             elif re.match(r"^[ЁёА-я]$", word):  # skip single russian word ('с', 'и')
@@ -70,6 +73,7 @@ def get_dict_words_count(text: str) -> multidict:
 
         val = tmp_dict.get(word, 0)
         tmp_dict[word.lower()] = val + 1
+# Мб есть более элегантный способ приведения обычного словаря к мультиСловарю?)0) # kish
     for key in tmp_dict:
         if len(key) > 0:  # Some strange bug with key = ''
             full_terms_dict.add(key, tmp_dict[key])
@@ -92,10 +96,10 @@ def _get_stopwords_list(*file_directories) -> list:
 
 
 def _remove_punctuation_marks(text: str) -> str:
+# Зачем здесь replace? # kish
     whitespaces_without_space = string.whitespace.replace(' ', '')
     all_marks = string.punctuation + whitespaces_without_space
     # all_marks = string.punctuation
     for mark in all_marks:
         text = text.replace(mark, ' ')
-
     return text

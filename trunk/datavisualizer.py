@@ -101,6 +101,7 @@ class DataVisualizer(object):
         self._create_graphic()
         self._logger.stop("Graphic has calculated")
         # set window's title
+
         plt.get_current_fig_manager().set_window_title('График частых слов')
         # don't block the main-thread (for 2nd window showing)
         plt.draw()
