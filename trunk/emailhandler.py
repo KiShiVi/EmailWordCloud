@@ -4,6 +4,7 @@ from email.header import decode_header
 import webbrowser
 import os
 
+
 def get_first_text_block(email_message_instance):
     """Метод, который возвращает тело письма
 
@@ -55,7 +56,7 @@ class EmailHandler:
 
         self.imap.select("inbox")
         # print(self.imap.list())
-        result, data = self.imap.uid('search', None, '(HEADER Subject "' + tag +'")')
+        result, data = self.imap.uid('search', None, '(HEADER Subject "' + tag + '")')
 
         if result != "OK":  # Херовый запрос
             exit(0)
@@ -68,7 +69,10 @@ class EmailHandler:
         resultList = []
 
         for uid in uidOfMails:
-            result, data = self.imap.fetch(uid, '(RFC822)')
+            # try:
+            result, data = self.imap.uid('fetch', uid, 'RFC822')
+            # except:
+            #     exit(0)
 
             if result != "OK":  # Херовый запрос
                 exit(0)

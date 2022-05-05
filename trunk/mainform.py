@@ -113,6 +113,8 @@ class MainForm(QWidget):
         if self.listOfMessages is None:
             self.error_dialog.show()
             return
+
+        self.comboBoxWork.clear()
         for work in self.listOfMessages:
             self.comboBoxWork.addItem(work.split('\n')[0])
 
