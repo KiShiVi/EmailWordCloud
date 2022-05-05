@@ -1,3 +1,4 @@
+from PyQt5 import QtWidgets
 import imaplib
 import email
 from email.header import decode_header
@@ -35,11 +36,13 @@ class EmailHandler:
         :param ext_password: Пароль
         """
 
+        self.error_dialog =  QtWidgets.QMessageBox()
+        self.error_dialog.setText('Соединение с почтовым сервисом сброшено. Попытка восстановить соединение')
         self.username = username
         self.ext_password = ext_password
         # create an IMAP4 class with SSL
         # self.imap = imaplib.IMAP4_SSL("imap.mail.ru")
-        self.imap = imaplib.IMAP4_SSL("imap.rambler.ru")
+        self.imap = imaplib.IMAP4_SSL("imap.rambler.ru", 993)
         self.authenticate()
 
     def authenticate(self):
@@ -54,7 +57,16 @@ class EmailHandler:
         :return: Список тел писем
         """
 
-        self.imap.select("inbox")
+        try:
+            self.imap.select("inbox")
+        except:
+            self.error_dialog.show()
+            self.imap = imaplib.IMAP4_SSL("imap.rambler.ru", 993)
+            self.authenticate()
+        try:
+            self.imap.select("inbox")
+        except:
+            exit(0)
         # print(self.imap.list())
         result, data = self.imap.uid('search', None, '(HEADER Subject "' + tag + '")')
 

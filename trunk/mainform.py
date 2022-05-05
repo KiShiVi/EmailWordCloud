@@ -138,6 +138,10 @@ class MainForm(QWidget):
 
         self.calculate(self.listOfMessages[self.comboBoxWork.currentIndex()])
 
+    def closeEvent(self, a0: PyQt5.QtGui.QCloseEvent) -> None:
+        print("Bye!")
+        self.emailHandler.close()
+
     # def resizeEvent(self, event):
     #     if self.wordCloudGB.height() > self.wordCloudGB.width():
     #         self.wordCloudGB.resize(self.wordCloudGB.width(), self.wordCloudGB.width())
