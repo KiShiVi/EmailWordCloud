@@ -1,8 +1,11 @@
+"""Сейчас файл не используется."""
+
 from datetime import datetime
 
 
 # Singleton class for time checking (debug only)
 class LogTime(object):
+    """Класс для контроля времени. (Надо решить, нужен ли он нам)"""
     instance = None
 
     def __new__(cls, enabled=True):
