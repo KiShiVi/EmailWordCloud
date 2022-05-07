@@ -1,12 +1,11 @@
-import PyQt5.QtWidgets
-from PyQt5.QtWidgets import QWidget
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-from PyQt5.QtGui import QPixmap
-import numpy as np
-from PIL import Image
-from wordcloud import WordCloud, STOPWORDS
 from os import path
+
+import PyQt5.QtWidgets
+import numpy as np
+import pyqtgraph as pg
+from PIL import Image
+from PyQt5.QtWidgets import QWidget
+from wordcloud import WordCloud
 
 
 class WordCloudWidget(QWidget):

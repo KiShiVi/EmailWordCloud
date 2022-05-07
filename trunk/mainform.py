@@ -86,19 +86,11 @@ class MainForm(QWidget):
 
         self.setLayout(mainLayout)
 
-    ##!< Здесь текст студента с уже отпаршенной фамилией и номером группы. Т.е. уже тупо чистый текст для анализа
     def calculate(self, text, hasTitle: bool = True):
         """Анализ заданного текста. Автоматически обновляет график, облако слов и текст в TextEditor'e
 
         :param text: ИСХОДНЫЙ текст
         """
-
-        # Здесь твой выход, Димас. Прогоняем текст через анализатор и ставим все слова в начальную форму.
-        # Удаляем все стоп-слова.
-        # Мечтаю получить на выходе текст (str). Если у тебя на выходе получается список [],
-        # то просто сделай .join и дай мне текст <3
-        #
-        # goodText = textProcessing( text )
 
         analyser_text = norm(processText(text.lower(), hasTitle))
         self.wordCloud.calculate(analyser_text)
