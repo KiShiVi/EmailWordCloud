@@ -1,9 +1,9 @@
 import PyQt5.QtWidgets
-from PyQt5.QtCore import QPoint, Qt
+from PyQt5.QtChart import (QBarCategoryAxis, QBarSet, QChart,
+                           QChartView, QValueAxis, QHorizontalBarSeries)
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtChart import (QBarCategoryAxis, QBarSeries, QBarSet, QChart,
-                           QChartView, QLineSeries, QValueAxis, QHorizontalBarSeries)
 
 
 class WordGraphicWidget(QWidget):
@@ -23,6 +23,7 @@ class WordGraphicWidget(QWidget):
         self.layout = PyQt5.QtWidgets.QHBoxLayout()
 
         self.isInit = False
+        self.chart_view = None
 
         self.setLayout(self.layout)
 

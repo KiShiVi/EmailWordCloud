@@ -1,7 +1,8 @@
-from os import path
-from PyQt5.QtWidgets import QApplication
-from mainform import MainForm
 import sys
+
+from PyQt5.QtWidgets import QApplication
+
+from mainform import MainForm
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

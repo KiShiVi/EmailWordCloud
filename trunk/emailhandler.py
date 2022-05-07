@@ -1,9 +1,7 @@
-from PyQt5 import QtWidgets
-import imaplib
 import email
-from email.header import decode_header
-import webbrowser
-import os
+import imaplib
+
+from PyQt5 import QtWidgets
 
 
 def get_first_text_block(email_message_instance):
@@ -36,8 +34,8 @@ class EmailHandler:
         :param ext_password: Пароль
         """
 
-        self.error_dialog =  QtWidgets.QMessageBox()
-        self.error_dialog.setText('Соединение с почтовым сервисом сброшено. Попытка восстановить соединение')
+        self.error_dialog = QtWidgets.QMessageBox()
+        self.error_dialog.setText('Соединение с почтовым сервисом сброшено. Попробуйте перезапустить программу')
         self.username = username
         self.ext_password = ext_password
         # create an IMAP4 class with SSL
@@ -60,13 +58,13 @@ class EmailHandler:
         try:
             self.imap.select("inbox")
         except:
-            self.error_dialog.show()
             self.imap = imaplib.IMAP4_SSL("imap.rambler.ru", 993)
             self.authenticate()
-        try:
-            self.imap.select("inbox")
-        except:
-            exit(0)
+            try:
+                self.imap.select("inbox")
+            except:
+                self.error_dialog.show()
+                exit(0)
         # print(self.imap.list())
         result, data = self.imap.uid('search', None, '(HEADER Subject "' + tag + '")')
 
@@ -104,6 +102,8 @@ class EmailHandler:
 
     def close(self):
         """Метод закрытия соединения с почтовым сервисом"""
-
-        self.imap.close()
-        self.imap.logout()
+        try:
+            self.imap.close()
+            self.imap.logout()
+        except:
+            return

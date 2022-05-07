@@ -5,19 +5,9 @@
 import pymorphy2
 
 
-# Singleton
-class TextAnalyzer(object):
-    instance = None
-
-    def __new__(cls, integer):
-        if cls.instance is None:
-            cls.instance = super(TextAnalyzer, cls).__new__(cls)
-            cls.integer = 0
-        return cls.instance
-
-    def __init__(self, integer):
-        self.integer = integer
-
-    def print(self):
-        print("Instance: " + str(self.instance))
-        print("Value in: " + str(self.integer))
+def norm(text):
+    resultList = []
+    morph = pymorphy2.MorphAnalyzer()
+    for word in text.split(' '):
+        resultList.append(morph.parse(word)[0].normal_form)
+    return ' '.join(resultList)

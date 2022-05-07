@@ -1,11 +1,12 @@
 import PyQt5.QtWidgets
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
+
+from emailhandler import EmailHandler
+from text_analyzer import *
 from wordcloudwidget import WordCloudWidget
 from wordgraphicwidget import WordGraphicWidget
-from emailhandler import EmailHandler
+from wordsparsers import *
 
 GRAPHIC_SIZE = 400
 
@@ -86,7 +87,7 @@ class MainForm(QWidget):
         self.setLayout(mainLayout)
 
     ##!< Здесь текст студента с уже отпаршенной фамилией и номером группы. Т.е. уже тупо чистый текст для анализа
-    def calculate(self, text):
+    def calculate(self, text, hasTitle: bool = True):
         """Анализ заданного текста. Автоматически обновляет график, облако слов и текст в TextEditor'e
 
         :param text: ИСХОДНЫЙ текст
@@ -98,9 +99,11 @@ class MainForm(QWidget):
         # то просто сделай .join и дай мне текст <3
         #
         # goodText = textProcessing( text )
-        self.wordCloud.calculate(text)
+
+        analyser_text = norm(processText(text.lower(), hasTitle))
+        self.wordCloud.calculate(analyser_text)
         self.wordCloud.setWordCloud()
-        self.wordPlot.calculate(text)
+        self.wordPlot.calculate(analyser_text)
 
         self.textEditor.clear()
         self.textEditor.setText(text)
@@ -123,7 +126,7 @@ class MainForm(QWidget):
     def onAnalysisCurTextButtonClicked(self):
         """Реакция на нажатие кнопки Анализ"""
 
-        self.calculate(self.textEditor.toPlainText())
+        self.calculate(self.textEditor.toPlainText(), False)
 
     def onTagTextEdit(self):
         """Реакция на изменение поля для ввода тега"""
