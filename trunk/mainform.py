@@ -8,7 +8,7 @@ from wordcloudwidget import WordCloudWidget
 from wordgraphicwidget import WordGraphicWidget
 from wordsparsers import *
 
-GRAPHIC_SIZE = 400
+GRAPHIC_SIZE = 500
 
 
 class MainForm(QWidget):
@@ -61,27 +61,35 @@ class MainForm(QWidget):
 
         toolsLayout.addStretch(0)
 
+        toolsGB = QGroupBox("Инструменты")
+        toolsGB.setLayout(toolsLayout)
+
+        toolsGB.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
+
         mainLayout = QtWidgets.QHBoxLayout()
 
         self.wordPlotGB = QtWidgets.QGroupBox("График")
-        wordPlotLO = QtWidgets.QGridLayout()
+        wordPlotLO = QtWidgets.QHBoxLayout()
         self.wordPlot = WordGraphicWidget(GRAPHIC_SIZE)
-        wordPlotLO.addWidget(self.wordPlot, 0, 0)
+        wordPlotLO.addWidget(self.wordPlot)
         self.wordPlotGB.setLayout(wordPlotLO)
+        self.wordPlotGB.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
 
         self.wordCloudGB = QtWidgets.QGroupBox("Облако")
-        wordCloudLO = QtWidgets.QGridLayout()
+        wordCloudLO = QtWidgets.QHBoxLayout()
         self.wordCloud = WordCloudWidget(GRAPHIC_SIZE)
-        wordCloudLO.addWidget(self.wordCloud, 0, 0)
+        wordCloudLO.addWidget(self.wordCloud)
         self.wordCloudGB.setLayout(wordCloudLO)
+        self.wordCloudGB.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
         # self.wordCloud.setWordCloud(r"output/output.png")
         # self.wordCloud.setWordCloud(r"../media/output.png")
 
-        mainLayout.addLayout(toolsLayout)
+        mainLayout.addWidget(toolsGB)
         # mainLayout.addStretch(5)
         mainLayout.addWidget(self.wordPlotGB)
-        mainLayout.addSpacing(50)
+        # mainLayout.addSpacing(50)
         mainLayout.addWidget(self.wordCloudGB)
 
         self.setLayout(mainLayout)
@@ -138,9 +146,12 @@ class MainForm(QWidget):
         self.emailHandler.close()
 
     # def resizeEvent(self, event):
-    #     if self.wordCloudGB.height() > self.wordCloudGB.width():
-    #         self.wordCloudGB.resize(self.wordCloudGB.width(), self.wordCloudGB.width())
-    #         self.wordPlotGB.resize(self.wordCloudGB.width(), self.wordCloudGB.width())
-    #     else:
-    #         self.wordCloudGB.resize(self.wordCloudGB.height(), self.wordCloudGB.height())
-    #         self.wordPlotGB.resize(self.wordCloudGB.height(), self.wordCloudGB.height())
+    # if self.wordCloudGB.height() > self.wordCloudGB.width():
+    #     self.wordCloudGB.resize(self.wordCloudGB.width(), self.wordCloudGB.width())
+    # else:
+    #     self.wordCloudGB.resize(self.wordCloudGB.height(), self.wordCloudGB.height())
+    #
+    # if self.wordPlotGB.height() > self.wordPlotGB.width():
+    #     self.wordPlotGB.resize(self.wordPlotGB.width(), self.wordPlotGB.width())
+    # else:
+    #     self.wordPlotGB.resize(self.wordPlotGB.height(), self.wordPlotGB.height())

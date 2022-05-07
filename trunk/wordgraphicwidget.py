@@ -104,8 +104,8 @@ class WordGraphicWidget(QWidget):
 
         self.isInit = True
 
-    # def resizeEvent(self, event):
-    #     if self.height() > self.width():
-    #         self.resize(self.width(), self.width())
-    #     else:
-    #         self.resize(self.height(), self.height())
+    def resizeEvent(self, event):
+        if self.height() > self.width():
+            self.resize(self.width(), self.width())
+        else:
+            self.resize(self.height(), self.height())

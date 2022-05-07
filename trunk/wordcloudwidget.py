@@ -69,8 +69,8 @@ class WordCloudWidget(QWidget):
         self.wc.generate(text)
         self.wc.to_file(path.join(self.currdir, r"output/output.png"))
 
-    # def resizeEvent(self, event):
-    #     if self.height() > self.width():
-    #         self.resize(self.width(), self.width())
-    #     else:
-    #         self.resize(self.height(), self.height())
+    def resizeEvent(self, event):
+        if self.height() > self.width():
+            self.resize(self.width(), self.width())
+        else:
+            self.resize(self.height(), self.height())
