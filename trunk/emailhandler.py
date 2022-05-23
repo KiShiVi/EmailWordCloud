@@ -18,13 +18,13 @@ def get_first_text_block(email_message_instance):
             if part.get_content_maintype() == 'text':
                 text = part.get_payload(decode=True).decode("utf-8")#.replace('<br>', '\n')
                 text = re.sub(r'\<[^>]*\>', '\n', text)
-                while len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
+                while len(text) > 0 and len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
                     text = '\n'.join(text.split('\n')[1:])
                 return text
     elif maintype == 'text':
         text = email_message_instance.get_payload(decode=True).decode("utf-8")#.replace('<br>', '\n')
         text = re.sub(r'\<[^>]*\>', '\n', text)
-        while len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
+        while len(text) > 0 and len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
             text = '\n'.join(text.split('\n')[1:])
         return text
 
