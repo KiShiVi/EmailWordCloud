@@ -7,6 +7,7 @@ from text_analyzer import *
 from wordcloudwidget import WordCloudWidget
 from wordgraphicwidget import WordGraphicWidget
 from wordsparsers import *
+import re
 
 GRAPHIC_SIZE = 500
 
@@ -101,6 +102,14 @@ class MainForm(QWidget):
         """
 
         analyser_text = norm(processText(text.lower(), hasTitle))
+
+        if analyser_text == "ошибка":
+            self.wordCloud.calculate(analyser_text)
+            self.wordCloud.setWordCloud(os.path.join(os.path.dirname(sys.executable),  r"resources/cloud.png"))
+            self.textEditor.clear()
+            self.textEditor.setText("Неверно составлено письмо")
+            return
+
         self.wordCloud.calculate(analyser_text)
         self.wordCloud.setWordCloud()
         self.wordPlot.calculate(analyser_text)

@@ -50,7 +50,7 @@ class WordCloudWidget(QWidget):
 
         self.setLayout(layout)
 
-    def setWordCloud(self, imagePath=r"output/output.png"):
+    def setWordCloud(self, imagePath=os.path.join(os.path.dirname(sys.executable),  r"output/output.png")):
         """Метод обновляет облако слов на новое
 
         :param imagePath: Путь к новому облаку слов

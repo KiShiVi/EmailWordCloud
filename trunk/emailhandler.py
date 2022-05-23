@@ -2,6 +2,7 @@ import email
 import imaplib
 
 from PyQt5 import QtWidgets
+import re
 
 
 def get_first_text_block(email_message_instance):
@@ -15,9 +16,18 @@ def get_first_text_block(email_message_instance):
     if maintype == 'multipart':
         for part in email_message_instance.get_payload():
             if part.get_content_maintype() == 'text':
-                return part.get_payload(decode=True).decode("utf-8")
+                text = part.get_payload(decode=True).decode("utf-8")#.replace('<br>', '\n')
+                text = re.sub(r'\<[^>]*\>', '\n', text)
+                while len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
+                    text = '\n'.join(text.split('\n')[1:])
+                return text
     elif maintype == 'text':
-        return email_message_instance.get_payload(decode=True).decode("utf-8")
+        text = email_message_instance.get_payload(decode=True).decode("utf-8")#.replace('<br>', '\n')
+        text = re.sub(r'\<[^>]*\>', '\n', text)
+        while len(text.split('\n')) > 0 and len(re.findall(r'\S', text.split('\n')[0])) == 0:
+            text = '\n'.join(text.split('\n')[1:])
+        return text
+
 
 
 class EmailHandler:
@@ -97,7 +107,7 @@ class EmailHandler:
 
             # Я не знаю как и почему, но эта дичь работает
             resultList.append(get_first_text_block(email_message))
-        print(resultList)
+
         return resultList
 
     def close(self):

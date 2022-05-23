@@ -1,6 +1,7 @@
 import codecs
 from os import path
 import os, sys
+import re
 
 CURRENT_DIRECTORY = os.path.dirname(sys.executable)
 
@@ -43,6 +44,14 @@ def processText(in_text, hasTitle: bool = True):
         resultText = ' '.join(text.split('\n')[1:]).split(' ')
     else:
         resultText = ' '.join(text.split('\n')).split(' ')
+
+    while len(resultText) > 0 and len(re.findall(r'\S', resultText[0])) == 0:
+        resultText = resultText[1:]
+
+    if len(resultText) == 0:
+        return "ошибка"
+
+
 
     while resultText.__contains__(''):
         resultText.remove('')
