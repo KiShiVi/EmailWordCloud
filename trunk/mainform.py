@@ -138,8 +138,10 @@ class MainForm(QWidget):
 
     def onCurrentIndexChanged(self):
         """Реакция на изменение выбранного письма в ComboBox"""
-
-        self.calculate(self.listOfMessages[self.comboBoxWork.currentIndex()])
+        print(self.comboBoxWork.count())
+        # if self.comboBoxWork.
+        if self.comboBoxWork.count() > 1:
+            self.calculate(self.listOfMessages[self.comboBoxWork.currentIndex()])
 
     def closeEvent(self, a0: PyQt5.QtGui.QCloseEvent) -> None:
         print("Bye!")

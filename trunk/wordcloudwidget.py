@@ -1,4 +1,5 @@
 from os import path
+import os, sys
 
 import PyQt5.QtWidgets
 import numpy as np
@@ -23,7 +24,7 @@ class WordCloudWidget(QWidget):
         # stopwords = set(STOPWORDS)
 
         self.currdir = path.dirname(__file__)
-        mask = np.array(Image.open(path.join(self.currdir, r"resources/cloud.jpg")))
+        mask = np.array(Image.open(os.path.join(os.path.dirname(sys.executable),  r"resources/cloud.jpg")))
         self.wc = WordCloud(background_color="white",
                             max_words=500,
                             mask=mask,
@@ -43,9 +44,9 @@ class WordCloudWidget(QWidget):
         layout = PyQt5.QtWidgets.QHBoxLayout()
         layout.addWidget(self.win)
 
-        self.img = pg.QtGui.QGraphicsPixmapItem(pg.QtGui.QPixmap(r"../media/output.png"))
-        self.img.scale(1, -1)
-        self.win.addItem(self.img)
+        # self.img = pg.QtGui.QGraphicsPixmapItem(pg.QtGui.QPixmap(r"../media/output.png"))
+        # self.img.scale(1, -1)
+        # self.win.addItem(self.img)
 
         self.setLayout(layout)
 
@@ -67,7 +68,7 @@ class WordCloudWidget(QWidget):
         """
 
         self.wc.generate(text)
-        self.wc.to_file(path.join(self.currdir, r"output/output.png"))
+        self.wc.to_file(os.path.join(os.path.dirname(sys.executable),  r"output/output.png"))
 
     def resizeEvent(self, event):
         if self.height() > self.width():

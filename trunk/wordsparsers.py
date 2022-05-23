@@ -1,7 +1,8 @@
 import codecs
 from os import path
+import os, sys
 
-CURRENT_DIRECTORY = path.dirname(__file__)
+CURRENT_DIRECTORY = os.path.dirname(sys.executable)
 
 conjunctionPath = CURRENT_DIRECTORY + r'/resources/dictionaries/conjunctions.txt'
 prepositionPath = CURRENT_DIRECTORY + r'/resources/dictionaries/prepositions.txt'
