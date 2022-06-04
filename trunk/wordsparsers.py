@@ -40,6 +40,12 @@ def processText(in_text, hasTitle: bool = True):
     for sign in punctuationWords:
         text = text.replace(sign, ' ')
 
+    tempText = text.split('\n')
+    text = ""
+    for string in tempText:
+        if string.lower().__contains__("отправлено из") is False:
+            text += string + '\n'
+
     if hasTitle:
         resultText = ' '.join(text.split('\n')[1:]).split(' ')
     else:

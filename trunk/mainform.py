@@ -45,11 +45,17 @@ class MainForm(QWidget):
         self.comboBoxWork.setMinimumWidth(300)
 
         self.btnSearchMail = PyQt5.QtWidgets.QPushButton()
-        self.btnSearchMail.setText("Найти")
+        self.btnSearchMail.setText("Найти письма по тегу")
         self.btnSearchMail.clicked.connect(self.onSearchButtonClicked)
         self.btnSearchMail.setEnabled(False)
 
+        self.btnFullAnalysis = PyQt5.QtWidgets.QPushButton()
+        self.btnFullAnalysis.setText("Анализ всех писем по тегу")
+        self.btnFullAnalysis.clicked.connect(self.onBtnFullAnalysisClicked)
+        self.btnFullAnalysis.setEnabled(False)
+
         toolsLayout.addWidget(self.btnSearchMail)
+        toolsLayout.addWidget(self.btnFullAnalysis)
 
         self.textEditor = QtWidgets.QTextEdit()
         toolsLayout.addWidget(self.textEditor)
@@ -101,7 +107,10 @@ class MainForm(QWidget):
         :param text: ИСХОДНЫЙ текст
         """
 
-        analyser_text = norm(processText(text.lower(), hasTitle))
+        analyser_text = ""
+
+        for oneText in text:
+            analyser_text += ' ' + norm(processText(oneText.lower(), hasTitle))
 
         if analyser_text == "ошибка":
             self.wordCloud.calculate(analyser_text)
@@ -115,7 +124,7 @@ class MainForm(QWidget):
         self.wordPlot.calculate(analyser_text)
 
         self.textEditor.clear()
-        self.textEditor.setText(text)
+        self.textEditor.setText('\n'.join(text))
 
     def onSearchButtonClicked(self):
         """Реакция на нажатие кнопки 'Найти'"""
@@ -130,27 +139,42 @@ class MainForm(QWidget):
         for work in self.listOfMessages:
             self.comboBoxWork.addItem(work.split('\n')[0])
 
-        self.calculate(self.listOfMessages[0])
+        self.calculate([self.listOfMessages[0]])
+
+    def onBtnFullAnalysisClicked(self):
+        self.listOfMessages = self.emailHandler.get_messages(self.lineEditMailTag.text())
+
+        if self.listOfMessages is None:
+            self.error_dialog.show()
+            return
+
+        self.comboBoxWork.clear()
+        for work in self.listOfMessages:
+            self.comboBoxWork.addItem(work.split('\n')[0])
+
+        self.calculate(self.listOfMessages)
 
     def onAnalysisCurTextButtonClicked(self):
         """Реакция на нажатие кнопки Анализ"""
 
-        self.calculate(self.textEditor.toPlainText(), False)
+        self.calculate([self.textEditor.toPlainText()], False)
 
     def onTagTextEdit(self):
         """Реакция на изменение поля для ввода тега"""
 
         if len(self.lineEditMailTag.text()) == 0:
             self.btnSearchMail.setEnabled(False)
+            self.btnFullAnalysis.setEnabled(False)
         else:
             self.btnSearchMail.setEnabled(True)
+            self.btnFullAnalysis.setEnabled(True)
 
     def onCurrentIndexChanged(self):
         """Реакция на изменение выбранного письма в ComboBox"""
         print(self.comboBoxWork.count())
         # if self.comboBoxWork.
         if self.comboBoxWork.count() > 1:
-            self.calculate(self.listOfMessages[self.comboBoxWork.currentIndex()])
+            self.calculate([self.listOfMessages[self.comboBoxWork.currentIndex()]])
 
     def closeEvent(self, a0: PyQt5.QtGui.QCloseEvent) -> None:
         print("Bye!")

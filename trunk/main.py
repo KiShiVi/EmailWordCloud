@@ -1,3 +1,7 @@
+# Инфа для будущей сборки
+# pyinstaller --onedir --windowed main.py
+# + output + resources + wordcloud + pymorphy2
+
 import sys
 
 from PyQt5.QtWidgets import QApplication
