@@ -1,5 +1,6 @@
+import os
+import sys
 from os import path
-import os, sys
 
 import PyQt5.QtWidgets
 import numpy as np

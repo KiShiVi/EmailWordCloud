@@ -1,6 +1,6 @@
 # Инфа для будущей сборки
-# pyinstaller --onedir --windowed main.py
-# + output + resources + wordcloud + pymorphy2
+# pyinstaller --onedir --windowed -i "D:\PythonProjects\EmailWordCloud\icon.ico" -n "WordCloud" trunk/main.py
+# + output + resources + wordcloud + pymorphy2(all) + icon TO DIST
 
 import sys
 
